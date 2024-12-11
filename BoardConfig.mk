@@ -127,6 +127,7 @@ TARGET_PLATFORM_DEVICE_BASE := /devices/soc/
 # Recovery
 BOARD_HAS_LARGE_FILESYSTEM := true
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
 
 ALLOW_MISSING_DEPENDENCIES := true
 
@@ -154,8 +155,22 @@ TW_INCLUDE_LIBRESETPROP := true
 TW_INCLUDE_LPDUMP := true
 TW_INCLUDE_LPTOOLS := true
 
+# Theme
+TW_STATUS_ICONS_ALIGN := center
+TW_Y_OFFSET := 90
+TW_H_OFFSET := -90
+
 # Network
 BUILD_BROKEN_USES_NETWORK := true
+
+# TWRP Haptics
+TW_SUPPORT_INPUT_AIDL_HAPTICS := true
+TW_SUPPORT_INPUT_AIDL_HAPTICS_FQNAME := "IVibrator/vibratorfeature"
+TW_EXCLUDE_TWRPAPP := true
+
+# Load kernel modules for touch & vibrator
+BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules.load.recovery))
+TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko atmel_mxt_ts.ko focaltech_fts.ko fts_touch_spi.ko nt36xxx-i2c.ko nt36xxx-spi.ko synaptics_dsx.ko xiaomi_touch.ko"
 
 # TWRP specific build flags
 TW_THEME := portrait_hdpi
